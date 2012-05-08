@@ -2,10 +2,8 @@
 
 ![acf-tax](tax-icon.png)
 
-**Tax** is a simple add-on for the ACF ([Advanced Custom Fields](http://www.advancedcustomfields.com/)) WP plugin that lets you use the taxonomies of a post in custom metabox.
 **Tax** is a simple add-on for the ACF ([Advanced Custom Fields](http://www.advancedcustomfields.com/)) WP plugin that lets you set the taxonomies of a post in a custom metabox.
 
-The Tax add-on generates elegant lists of checks boxes that can be formated in a number of user selected columns to save space. 
 The Tax add-on generates elegant lists of check-boxes that can be formated in a number of user selected columns to save space. 
 
 ##Installation
