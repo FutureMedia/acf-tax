@@ -21,6 +21,5 @@ in your functions file and you're ready to go.
 Public Domain
 
 ![Tax icon](http://futuremedia.gr/images/git/tax-1.png)
-![Tax icon](http://futuremedia.gr/images/git/tax-1.png)
 ![Tax icon](http://futuremedia.gr/images/git/tax-2.png)
 
