@@ -136,6 +136,7 @@ class Tax_field extends acf_Field
 	
 	function create_field($field)
 	{
+		global $post;
 		// defaults
 		$field[ 'taxonomy' ]  = ( array_key_exists( 'taxonomy', $field ) && isset( $field[ 'taxonomy' ] ) ) ? $field[ 'taxonomy' ] : 'category';
 		$field[ 'hidetax' ]   = isset( $field[ 'hidetax' ] ) ? $field[ 'hidetax' ] : '0';
@@ -190,7 +191,9 @@ class Tax_field extends acf_Field
 			foreach( $terms as $term ) {
 				
 				$selected = '';
-				if($term->count == 1) $selected = 'checked="checked"';
+				if (has_term($term->slug, $term->taxonomy, $post->ID)) {
+					$selected = 'checked="checked"';
+				}
 
 				if ($c == 1 ) : ?>
 					<tr>
