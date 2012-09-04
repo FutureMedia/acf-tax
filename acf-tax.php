@@ -66,6 +66,8 @@ class Tax_field extends acf_Field
 		ksort( $taxonomies );
 		$tax_choices = array();
 		foreach( $taxonomies as $tax ) $tax_choices[ $tax->name ] = $tax->label;
+		$col_choices = array();
+		for( $i = 1; $i <= 5; $i++ ) $col_choices[$i] = $i;
 		
 		?>
 			<tr class="field_option field_option_<?php echo $this->name; ?>">
@@ -95,7 +97,7 @@ class Tax_field extends acf_Field
 							'type'    => 'select',
 							'name'    => "fields[{$key}][taxcol]",
 							'value'   => $field[ 'taxcol' ],
-							'choices' => array('1','2','3','4','5')
+							'choices' => $col_choices,
 						) );
 					?>
 				</td>
