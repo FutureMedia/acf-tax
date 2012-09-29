@@ -286,14 +286,16 @@ class Tax_field extends acf_Field
 	function update_value($post_id, $field, $value)
 	{
 
-		foreach($value as $term) {
-			$terms[] = intval( $term );
-		}
+		if(is_array($value))
+			foreach($value as $term) {
+				$terms[] = intval( $term );
+			}
 
 		
-		$value = wp_set_object_terms( $post_id, $terms, $field[ 'taxonomy' ], false );
+			$value = wp_set_object_terms( $post_id, $terms, $field[ 'taxonomy' ], false );
 		
-		parent::update_value( $post_id, $field, $value );
+			parent::update_value( $post_id, $field, $value );
+		}
 		
 	}
 	
