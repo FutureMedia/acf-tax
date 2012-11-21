@@ -317,14 +317,20 @@ class Tax_field extends acf_Field
 	*	@since 2.2.0
 	* 
 	*-------------------------------------------------------------------------------------*/
-	
+
 	function get_value($post_id, $field)
 	{
-		// get value
-		$value = parent::get_value($post_id, $field);
-		
+		// get values
+		$terms = get_terms($field['taxonomy']);
+		$value = array();
+
+		foreach($terms as $term) {
+			$val = intval( $term->term_id );
+			$value[] = $val;
+		}
+
 		// return value
-		return $value;		
+		return $value;
 	}
 	
 	
