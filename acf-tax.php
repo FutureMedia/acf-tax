@@ -11,7 +11,7 @@
  *	To use it just register_field($class_name, $file_path) in your functions file
  *
  *	@author Future Media Ltd / www.futuremedia.gr / https://github.com/FutureMedia
- *
+ *  @author Will Ashworth (updated and brought current to support ACF 3.5.X)
  *
  */
  
@@ -193,9 +193,11 @@ class Tax_field extends acf_Field
 			foreach( $terms as $term ) {
 				
 				$selected = '';
-				
-				if($field['taxonomy'] == $term->taxonomy && in_array($term->term_id,$field['value'])){
-					$selected = 'checked="checked"';
+
+				if(isset($field['value']) && !empty($field['value'])) {
+					if($field['taxonomy'] == $term->taxonomy && in_array($term->term_id,$field['value'])){
+						$selected = 'checked="checked"';
+					}
 				}
 
 				if ($c == 1 ) : ?>
@@ -280,21 +282,24 @@ class Tax_field extends acf_Field
 	*
 	*	@author Elliot Condon
 	*	@since 2.2.0
-	* 
+	*
 	*-------------------------------------------------------------------------------------*/
-	
+
 	function update_value($post_id, $field, $value)
 	{
+		if(is_array($value)) {
+			foreach($value as $term) {
+				$terms[] = intval( $term );
+			}
 
-		foreach($value as $term) {
-			$terms[] = intval( $term );
+			$value = wp_set_object_terms( $post_id, $terms, $field[ 'taxonomy' ], false );
+			parent::update_value( $post_id, $field, $value );
+		}
+		else {
+			$value = wp_set_object_terms( $post_id, NULL, $field[ 'taxonomy' ], false );
+			parent::update_value( $post_id, $field, $value );
 		}
 
-		
-		$value = wp_set_object_terms( $post_id, $terms, $field[ 'taxonomy' ], false );
-		
-		parent::update_value( $post_id, $field, $value );
-		
 	}
 	
 	
@@ -312,14 +317,20 @@ class Tax_field extends acf_Field
 	*	@since 2.2.0
 	* 
 	*-------------------------------------------------------------------------------------*/
-	
+
 	function get_value($post_id, $field)
 	{
-		// get value
-		$value = parent::get_value($post_id, $field);
-		
+		// get values
+		$terms = get_terms($field['taxonomy']);
+		$value = array();
+
+		foreach($terms as $term) {
+			$val = intval( $term->term_id );
+			$value[] = $val;
+		}
+
 		// return value
-		return $value;		
+		return $value;
 	}
 	
 	
@@ -335,34 +346,16 @@ class Tax_field extends acf_Field
 	*
 	*	@author Brian Zoetewey - Taxonomy Field add-on
 	*
-	* 
 	*-------------------------------------------------------------------------------------*/
-	
+
 	function get_value_for_api($post_id, $field)
 	{
-		
-		// format value
-		
-		$value = parent::get_value($post_id, $field);
-		
-		$term_links = array();
-		foreach( $value as $term_id ) {
-			$term_id = intval( $term_id );
-			$term = get_term( $term_id, $field['taxonomy'] );
-			$link = get_term_link( $term, $field['taxonomy'] );
-			if( !is_wp_error( $link ) )
-				$term_links[] = '<a href="' . $link . '" rel="tag">' . $term->name . '</a>';
-		}
-		if( empty( $term_links ) )
-			return false;
-			
-		// return value
-		return join( '', $term_links ); //$value; 
+		$terms = get_terms($field['taxonomy']);
 
+		// return value
+		return $terms;
 	}
 	
 }
-
-
 
 ?>
