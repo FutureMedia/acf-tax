@@ -193,9 +193,11 @@ class Tax_field extends acf_Field
 			foreach( $terms as $term ) {
 				
 				$selected = '';
-				
-				if($field['taxonomy'] == $term->taxonomy && in_array($term->term_id,$field['value'])){
-					$selected = 'checked="checked"';
+
+				if(isset($field['value']) && !empty($field['value'])) {
+					if($field['taxonomy'] == $term->taxonomy && in_array($term->term_id,$field['value'])){
+						$selected = 'checked="checked"';
+					}
 				}
 
 				if ($c == 1 ) : ?>
