@@ -240,7 +240,7 @@ class Tax_field extends acf_Field
 		<?php 
 		
 		if ( $field[ 'hidetax' ] == 1 ) { ?>
-			<style id="tax" type="text/css">#<?php echo $field[ 'taxonomy' ]; ?>div {display:none;}</style>
+			<style id="tax" type="text/css">#tagsdiv-<?php echo $field[ 'taxonomy' ]; ?>, #<?php echo $field[ 'taxonomy' ]; ?>div {display:none;}</style>
 		<?php 		
 		}
 
