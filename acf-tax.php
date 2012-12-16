@@ -350,7 +350,7 @@ class Tax_field extends acf_Field
 
 	function get_value_for_api($post_id, $field)
 	{
-		$terms = get_terms($field['taxonomy']);
+		$terms = wp_get_post_terms($post_id, $field['taxonomy']);
 
 		// return value
 		return $terms;
