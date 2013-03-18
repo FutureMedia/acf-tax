@@ -320,13 +320,29 @@ class Tax_field extends acf_Field
 
 	function get_value($post_id, $field)
 	{
-		// get values
-		$terms = get_terms($field['taxonomy']);
-		$value = array();
+    		$value = array();
 
-		foreach($terms as $term) {
-			$val = intval( $term->term_id );
-			$value[] = $val;
+		if( is_numeric($post_id) )
+		{        
+    			// get values
+    			$terms = get_terms($field['taxonomy']);
+    
+    			foreach($terms as $term) {
+    				$val = intval( $term->term_id );
+    				$value[] = $val;
+    			}
+		}else{
+    			$stored_values = get_option( $post_id . '_' . $field['name'], null );
+    		
+            		if(is_array($stored_values)){
+    	 	    		$terms=wp_get_object_terms($post_id,$field['taxonomy']);
+            			foreach($terms as $term) {
+        				$val = intval( $term->term_id );
+                    			if(in_array($term->term_taxonomy_id,$stored_values)){
+                				$value[] = $val;
+                    			}
+				}
+		 	}    	    
 		}
 
 		// return value
