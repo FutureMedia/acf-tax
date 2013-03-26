@@ -11,7 +11,7 @@ Tax add-on generates elegant lists of check-boxes that can be formated in a numb
 Move the acf-tax.php file in your theme folder. To activate just add 
 
 <pre><code>
-register_field('Tax_field’, dirname(__File__) . '/acf-tax.php');
+register_field('Tax_field', dirname(__File__) . '/acf-tax.php');
 </code></pre>
 
 in your functions file and you're ready to go.
